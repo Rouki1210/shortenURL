@@ -123,14 +123,22 @@ namespace Service1.Controllers
         }
 
         [HttpGet("expand/{shortCode}")]
-        public IActionResult ExpandUrl(string shortCode)
+        public async Task<IActionResult> RedirectToOriginalUrl(string shortCode)
         {
-            if (UrlMap.TryGetValue(shortCode, out var originalUrl))
+            var originalUrl = Uri.UnescapeDataString(shortCode);
+            var urlEntry = await _context.Urls.FirstOrDefaultAsync(u => u.shorturl == originalUrl);
+            if (urlEntry == null)
             {
-                return Redirect(originalUrl);
+                // Return 404 if not found
+                return NotFound("Short URL not found.");
             }
 
-            return NotFound("Short URL not found.");
+            urlEntry.NumofClicks++;
+            _context.Entry(urlEntry).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            // Redirect to the original URL
+            return Redirect(urlEntry.currentUrl);
         }
 
         private string GenerateShortCode(string url)
