@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,6 +16,8 @@ namespace Service1.Controllers
     public class UrlsController : ControllerBase
     {
         private readonly UrlContext _context;
+        private readonly ConcurrentDictionary<string, string> UrlMap = new();
+        private readonly string BaseUrl = "https://short.ly/";
 
         public UrlsController(UrlContext context)
         {
@@ -25,7 +28,13 @@ namespace Service1.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Url>>> GetUrls()
         {
-            return await _context.Urls.ToListAsync();
+            var urls = await _context.Urls.ToListAsync();
+            if (urls == null || urls.Count == 0)
+            {
+                return NotFound("No URLs found.");
+            }
+
+            return Ok(urls);
         }
 
         // GET: api/Urls/5
@@ -84,21 +93,56 @@ namespace Service1.Controllers
             return CreatedAtAction(nameof(GetUrl), new { id = url.Id }, url);
         }
 
-        // DELETE: api/Urls/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUrl(int id)
+
+
+        [HttpPost("shorten")]
+        public IActionResult ShortenUrl([FromBody] string currentUrl)
         {
-            var url = await _context.Urls.FindAsync(id);
-            if (url == null)
+            if (string.IsNullOrEmpty(currentUrl))
             {
-                return NotFound();
+                return BadRequest("Invalid Url");
             }
 
-            _context.Urls.Remove(url);
-            await _context.SaveChangesAsync();
+            var shortenUrl = GenerateShortCode(currentUrl);
 
-            return NoContent();
+            UrlMap[shortenUrl] = currentUrl;
+
+            var urlEntry = new Url
+            {
+                Id = 0,
+                currentUrl = currentUrl,
+                shorturl = BaseUrl + shortenUrl,
+                NumofClicks = 0,
+                DateCreate = DateTime.UtcNow
+            };
+
+            _context.Urls.Add(urlEntry);
+            _context.SaveChangesAsync();
+
+            return Ok(new { shortenUrl = $"{BaseUrl}{shortenUrl}" });
         }
+
+        [HttpGet("expand/{shortCode}")]
+        public IActionResult ExpandUrl(string shortCode)
+        {
+            if (UrlMap.TryGetValue(shortCode, out var originalUrl))
+            {
+                return Redirect(originalUrl);
+            }
+
+            return NotFound("Short URL not found.");
+        }
+
+        private string GenerateShortCode(string url)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var random = new Random();
+            var shortCode = new string(Enumerable.Repeat(chars, 8)
+                                        .Select(s => s[random.Next(s.Length)]).ToArray());
+            return shortCode;
+        }
+
+
 
         private bool UrlExists(int id)
         {
