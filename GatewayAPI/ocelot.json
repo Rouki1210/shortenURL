@@ -13,7 +13,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/Urls",
-      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamHttpMethod": [ "Get" ],
       "FileCacheOptions": {
         "TtlSeconds": 60,
         "Region": "default",
@@ -61,7 +61,56 @@
       ],
       "UpstreamPathTemplate": "/Urls",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    // Service 2 Api
+    // Get Users
+    {
+      "DownstreamPathTemplate": "/api/Users",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Post": 7163
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Users",
+      "UpstreamHttpMethod": [ "Get" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60,
+        "Region": "default",
+        "Header": "User"
+      }
+    },
+
+    //Get User by Id
+    {
+      "DownstreamPathTemplate": "/api/Users/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Post": 7163
+        }
+      ],
+      "UpstreamPathTemplate": "/Users",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    //Register
+    {
+      "DownstreamPathTemplate": "/api/Users/Register",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Post": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/Users",
+      "UpstreamHttpMethod": [ "Post" ]
     }
+
   ],
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:7136",
