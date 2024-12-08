@@ -1,0 +1,72 @@
+{
+  "Routes": [
+
+    //Service 1 Api
+    //Get List Urls
+    {
+      "DownstreamPathTemplate": "/api/Urls",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Urls",
+      "UpstreamHttpMethod": [ "GET" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60,
+        "Region": "default",
+        "Header": "ShortenUrl"
+      }
+    },
+
+    //Get Url by Id
+    {
+      "DownstreamPathTemplate": "/api/Urls/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Post": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/Urls",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    //Shorten Url
+    {
+      "DownstreamPathTemplate": "/api/Urls/shorten",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Post": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/Urls",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+
+    //Redict Shorten Url
+    {
+      "DownstreamPathTemplate": "/api/Urls/expand/{shortCode}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Post": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/Urls",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7136",
+    "RateLimitOptions": {
+      "QuotaExceededMessage": "You are overwhelming me with multiple requests. Relax small"
+    }
+  }
+}
