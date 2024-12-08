@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace LoginService.Controllers
+namespace DCMM.Controllers
 {
     [ApiController]
     [Route("[controller]")]
