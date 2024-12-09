@@ -4,22 +4,37 @@ using Ocelot.Middleware;
 using Service1.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers();
+
+builder.Services.AddDbContext<UrlContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
 builder.Services.AddEndpointsApiExplorer();
-// Add services to the container.
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddJsonFile(
+  "ocelot.json",
+  optional: false,
+  reloadOnChange: true
+  );
+
+builder.Services.AddOcelot(builder.Configuration);
+
+//(1) config CORS   => VERY IMPORTANT
 builder.Services.AddCors(options =>
 {
-    x.WithDictionaryHandle();
+    options.AddPolicy("CorsPolicy", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-
+//(2) enable CORS    => VERY IMPORTANT
 app.UseCors("CorsPolicy");
-app.UseHttpsRedirection();
-await app.UseOcelot();
-
 
 //app.UseHttpsRedirection();
 app.UseAuthorization();

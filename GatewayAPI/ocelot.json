@@ -107,7 +107,7 @@
           "Post": 7157
         }
       ],
-      "UpstreamPathTemplate": "/Users",
+      "UpstreamPathTemplate": "/Users/Register",
       "UpstreamHttpMethod": [ "Post" ]
     }
 

@@ -5,7 +5,10 @@ VisualStudioVersion = 17.12.35521.163
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service1", "Service1\Service1.csproj", "{EFB182E9-B36D-4C9F-9070-D14F9C69C443}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayAPI", "GatewayAPI\GatewayAPI.csproj", "{E2921B7B-5B62-4ACE-B410-A42FCCDEE410}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayAPI", "GatewayAPI\GatewayAPI.csproj", "{E2921B7B-5B62-4ACE-B410-A42FCCDEE410}"
+	ProjectSection(ProjectDependencies) = postProject
+		{ADF37043-4DE2-4A8E-80E0-63E85C06044B} = {ADF37043-4DE2-4A8E-80E0-63E85C06044B}
+	EndProjectSection
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "reactclient", "ReactClient\reactclient.esproj", "{ADF37043-4DE2-4A8E-80E0-63E85C06044B}"
 EndProject
