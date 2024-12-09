@@ -1,6 +1,0 @@
-@DCMM_HostAddress = http://localhost:5052
-
-GET {{DCMM_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
