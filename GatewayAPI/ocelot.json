@@ -51,16 +51,16 @@
 
     //Redict Shorten Url
     {
-        "DownstreamPathTemplate": "/api/Urls/expand/{shortCode}",
-        "DownstreamScheme": "https",
-        "DownstreamHostAndPorts": [
-            {
-                "Host": "localhost",
-                "Post": 7157
-            }
-        ],
-        "UpstreamPathTemplate": "/Urlsexpand/{shortCode}",
-        "UpstreamHttpMethod": [ "Get" ]
+      "DownstreamPathTemplate": "/api/Urls/expand/{shortCode}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Post": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/Urlsexpand/{shortCode}",
+      "UpstreamHttpMethod": [ "Get" ]
     },
 
     // Service 2 Api
@@ -71,7 +71,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Post": 7163
+          "Post": 7133
         }
       ],
       "UpstreamPathTemplate": "/api/Users",
@@ -90,25 +90,39 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Post": 7163
+          "Post": 7133
         }
       ],
       "UpstreamPathTemplate": "/Users",
       "UpstreamHttpMethod": [ "Get" ]
     },
 
-    //Register
+    //Login
     {
-      "DownstreamPathTemplate": "/api/Users/Register",
+      "UpstreamPathTemplate": "/login",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/Users/login",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Post": 7157
+          "Port": 7133
         }
-      ],
-      "UpstreamPathTemplate": "/Users/Register",
-      "UpstreamHttpMethod": [ "Post" ]
+      ]
+    },
+
+    //Register
+    {
+      "UpstreamPathTemplate": "/register",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/Users/register",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7133
+        }
+      ]
     }
 
   ],

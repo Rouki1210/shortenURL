@@ -75,13 +75,33 @@ namespace Service2.Controllers
 
         // POST: api/Users
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        [HttpPost("register")]
+        public async Task<ActionResult<User>> Register(User user)
         {
+            if (await _context.User.AnyAsync(u => u.Name == user.Name))
+            {
+                return Conflict("Username already exists");
+            }
+
+            user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+
             _context.User.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetUser), new {id = user.Id}, new {user.Id, user.Name});
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<User>> Login(User user)
+        {
+            var existingUser = await _context.User.FirstOrDefaultAsync(u => u.Name == user.Name);
+
+            if (existingUser == null || !BCrypt.Net.BCrypt.Verify(user.Password, existingUser.Password))
+            {
+                return Unauthorized("Invalid username or password");
+            }
+
+            return Ok(new {userID = existingUser.Id});
         }
 
         // DELETE: api/Users/5
