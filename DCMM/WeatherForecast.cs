@@ -1,4 +1,4 @@
-namespace LoginService
+namespace DCMM
 {
     public class WeatherForecast
     {
