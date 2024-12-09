@@ -7,6 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service1", "Service1\Servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GatewayAPI", "GatewayAPI\GatewayAPI.csproj", "{E2921B7B-5B62-4ACE-B410-A42FCCDEE410}"
 EndProject
+<<<<<<< Updated upstream
+=======
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service2", "..\DCMM\DCMM\Service2.csproj", "{7CA146A7-1851-4335-B52C-E03C31820CE6}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "reactclient", "ReactClient\reactclient.esproj", "{ADF37043-4DE2-4A8E-80E0-63E85C06044B}"
+EndProject
+>>>>>>> Stashed changes
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +28,19 @@ Global
 		{E2921B7B-5B62-4ACE-B410-A42FCCDEE410}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2921B7B-5B62-4ACE-B410-A42FCCDEE410}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2921B7B-5B62-4ACE-B410-A42FCCDEE410}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< Updated upstream
+=======
+		{7CA146A7-1851-4335-B52C-E03C31820CE6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CA146A7-1851-4335-B52C-E03C31820CE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CA146A7-1851-4335-B52C-E03C31820CE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CA146A7-1851-4335-B52C-E03C31820CE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADF37043-4DE2-4A8E-80E0-63E85C06044B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADF37043-4DE2-4A8E-80E0-63E85C06044B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADF37043-4DE2-4A8E-80E0-63E85C06044B}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{ADF37043-4DE2-4A8E-80E0-63E85C06044B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADF37043-4DE2-4A8E-80E0-63E85C06044B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADF37043-4DE2-4A8E-80E0-63E85C06044B}.Release|Any CPU.Deploy.0 = Release|Any CPU
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
