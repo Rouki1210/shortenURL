@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Form, Input, Alert } from 'antd';
 
 const Register = () => {
@@ -10,7 +10,7 @@ const Register = () => {
         const { username, password } = values;
 
         try {
-            const response = await fetch('http://localhost:7133/register', {
+            const response = await fetch('https://localhost:7136/api/Users/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

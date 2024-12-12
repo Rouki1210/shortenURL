@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Form, Input, Alert } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ const Login = () => {
         const { username, password } = values;
 
         try {
-            const response = await fetch('http://localhost:7133/login', {
+            const response = await fetch('https://localhost:7136/api/Users/login', {    
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

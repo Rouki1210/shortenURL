@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Service1.Data;
 using Service1.Models;
 
@@ -96,14 +97,12 @@ namespace Service1.Controllers
 
 
         [HttpPost("shorten")]
-        public IActionResult ShortenUrl([FromBody] string currentUrl)
-        {
-            if (string.IsNullOrEmpty(currentUrl))
-            {
-                return BadRequest("Invalid Url");
-            }
 
+        public IActionResult ShortenUrl([FromBody]ShortenRequest request)
+        {
+            string currentUrl = request.CurrentUrl;
             var shortenUrl = GenerateShortCode(currentUrl);
+
 
             UrlMap[shortenUrl] = currentUrl;
 
@@ -119,7 +118,7 @@ namespace Service1.Controllers
             _context.Urls.Add(urlEntry);
             _context.SaveChangesAsync();
 
-            return Ok(new { shortenUrl = $"{BaseUrl}{shortenUrl}" });
+            return Ok(new {shortUrl = urlEntry.shorturl});
         }
 
         [HttpGet("expand/{shortCode}")]
@@ -150,6 +149,34 @@ namespace Service1.Controllers
             return shortCode;
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAll()
+        {
+            try
+            {
+                _context.Urls.RemoveRange(_context.Urls);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing your request");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUrl(int id)
+        {
+            var urlDb = await _context.Urls.FirstOrDefaultAsync(n => n.Id == id);
+
+            if (urlDb != null)
+            {
+                _context.Remove(urlDb);
+                await _context.SaveChangesAsync();
+            }
+            return NoContent();
+        }
 
 
         private bool UrlExists(int id)

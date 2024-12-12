@@ -6,7 +6,7 @@ using Service1.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-
+builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<UrlContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -40,5 +40,6 @@ app.UseCors("CorsPolicy");
 app.UseAuthorization();
 app.MapControllers();
 app.UseOcelot().Wait();
+app.UseSwagger();
 
 app.Run();

@@ -8,6 +8,6 @@
 
         public int NumofClicks { get; set; }
 
-        public DateTime DateCreate { get; set; }
+        public DateTime DateCreate { get; set; } = DateTime.Now;
     }
 }
