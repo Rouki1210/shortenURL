@@ -20,19 +20,36 @@ function HomePage() {
 
         try {
             const response = await fetch('https://localhost:7136/api/Urls/shorten', {
-                method: 'Post',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ currentUrl: url }),
             });
 
-            if (response.data && response.data.shortenUrl) {
-                message.success(`Shortened URL: ${response.data.shortenUrl}`);
+
+
+            if (!response.ok) {
+                message.error("Failed to shorten the URL. Please try again.");
+                return;
+            }
+
+            const result = await response.json();
+
+            if (result.shortUrl) {
+                message.success(`ShortUrl: ${result.shortUrl}`);
                 setUrl(""); // Clear input field
-            } else {
+            }
+            else {
                 message.error("Failed to shorten the URL. Please try again.");
             }
+
+            //if (response.data && response.data.shortenUrl) {
+            //    message.success(`Shortened URL: ${response.data.shortenUrl}`);
+            //    setUrl(""); // Clear input field
+            //} else {
+            //    message.error("Failed to shorten the URL. Please try again.");
+            //}
         } catch (error) {
             message.error("Error while connecting to the gateway.");
             console.error("API Error:", error);

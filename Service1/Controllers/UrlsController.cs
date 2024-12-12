@@ -98,7 +98,7 @@ namespace Service1.Controllers
 
         [HttpPost("shorten")]
 
-        public IActionResult ShortenUrl([FromBody]ShortenRequest request)
+        public async Task<IActionResult> ShortenUrl([FromBody]ShortenRequest request)
         {
             string currentUrl = request.CurrentUrl;
             var shortenUrl = GenerateShortCode(currentUrl);
@@ -116,7 +116,7 @@ namespace Service1.Controllers
             };
 
             _context.Urls.Add(urlEntry);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
             return Ok(new {shortUrl = urlEntry.shorturl});
         }
