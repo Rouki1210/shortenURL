@@ -1,0 +1,131 @@
+{
+  "Routes": [
+    // Service 1 API - Get List of URLs
+    {
+      "DownstreamPathTemplate": "/api/Urls",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/Urls",
+      "UpstreamHttpMethod": [ "Get" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60,
+        "Region": "default",
+        "Header": "ShortenUrl"
+      }
+    },
+
+    // Get URLs by UserId
+    {
+      "DownstreamPathTemplate": "/api/Urls/userLinks/{userId}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Urls/userLinks/{userId}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    // Shorten URL
+    {
+      "DownstreamPathTemplate": "/api/Urls",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Urls/shorten",
+      "UpstreamHttpMethod": [ "Post" ]
+    },
+
+    // Redirect Shortened URL
+    {
+      "DownstreamPathTemplate": "/api/Urls/redirect/{shortedLink}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7157
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Urls/redirect/{shortedLink}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    // Service 2 API - Users
+    {
+      "DownstreamPathTemplate": "/api/Users",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Users",
+      "UpstreamHttpMethod": [ "Get" ],
+      "FileCacheOptions": {
+        "TtlSeconds": 60,
+        "Region": "default",
+        "Header": "User"
+      }
+    },
+
+    // Get User by ID
+    {
+      "DownstreamPathTemplate": "/api/Users/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ],
+      "UpstreamPathTemplate": "/Users/{id}",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    // Login
+    {
+      "UpstreamPathTemplate": "/api/Users/login",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/Users/login",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ]
+    },
+
+    // Register
+    {
+      "UpstreamPathTemplate": "/api/Users/register",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamPathTemplate": "/api/Users/register",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7002
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:7136",
+    "RateLimitOptions": {
+      "QuotaExceededMessage": "You are overwhelming me with multiple requests. Relax small"
+    }
+  }
+}
